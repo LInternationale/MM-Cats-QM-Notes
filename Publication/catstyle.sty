@@ -1,0 +1,90 @@
+\ProvidesPackage{catstyle}[Quantum mechanics lecture notes]
+\RequirePackage[a4paper,inner=21mm,bindingoffset=5mm,outer=64mm,top=25mm,bottom=22mm,marginparwidth=43mm,marginparsep=7mm]{geometry}
+\RequirePackage{amsmath,amssymb,tikz,fancyhdr}
+\RequirePackage[unicode,hidelinks]{hyperref}
+\definecolor{accent}{HTML}{465D70}
+\definecolor{muted}{HTML}{57534E}
+\setlength{\parindent}{2\ccwd}
+\setlength{\parskip}{3pt}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyheadoffset[LE,RO]{\dimexpr\marginparsep+\marginparwidth\relax}
+\fancyhead[LE]{\small\color{accent}\thepage\qquad\nouppercase{\leftmark}}
+\fancyhead[RO]{\small\color{accent}\nouppercase{\rightmark}\qquad\thepage}
+\fancypagestyle{plain}{\fancyhf{}}
+\setlength{\headheight}{16pt}
+\renewcommand{\chaptermark}[1]{\markboth{CHAPTER~\thechapter\qquad #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\qquad #1}}
+\raggedbottom
+\everydisplay\expandafter{\the\everydisplay
+  \setlength{\abovedisplayskip}{3pt}%
+  \setlength{\belowdisplayskip}{4pt}%
+  \setlength{\abovedisplayshortskip}{3pt}%
+  \setlength{\belowdisplayshortskip}{4pt}%
+}
+\setlength{\marginparpush}{9pt}
+\newcommand{\side}[2]{\marginpar{\raggedright\footnotesize\color{black}{\color{accent}\bfseries #1}\par\nobreak\vspace{1pt}#2}}
+% Compare ink bounds at the current sizes, using a representative CJK glyph.
+\newsavebox{\cat@reference}
+\newsavebox{\cat@aligned}
+\newcommand{\cat@alignink}[3]{%
+  \begingroup
+  \XeTeXuseglyphmetrics=1
+  \sbox{\cat@reference}{#2}%
+  \sbox{\cat@aligned}{#3}%
+  \raise\dimexpr#1\relax\box\cat@aligned
+  \endgroup}
+\newcommand{\cat@alignbottom}{\cat@alignink{\dp\cat@aligned-\dp\cat@reference}}
+\newcommand{\cat@aligntop}{\cat@alignink{\ht\cat@reference-\ht\cat@aligned}}
+\let\cat@punctsymbol\CJKpunctsymbol
+\renewcommand{\CJKpunctsymbol}[1]{%
+  \ifx#1「%
+    \begingroup\XeTeXinterchartokenstate=0
+    \cat@aligntop{字}{\cat@punctsymbol{#1}}%
+    \endgroup
+  \else\ifx#1」%
+    \begingroup\XeTeXinterchartokenstate=0
+    \cat@alignbottom{字}{\cat@punctsymbol{#1}}%
+    \endgroup
+  \else
+    \cat@punctsymbol{#1}%
+  \fi\fi}
+\newcommand{\chapterlabel}[1]{\makebox[18mm][l]{%
+  \cat@alignbottom{字}{\color{accent}\fontsize{52}{54}\selectfont #1}}}
+\newcommand{\sectionlabel}[1]{{\color{accent}#1}\hspace{.55em}}
+\newlength{\sectionlabelwidth}
+\newcommand{\ruledtitle}[1]{%
+  \settowidth{\sectionlabelwidth}{\sectionlabel{\thesection}}%
+  \parbox[t]{\dimexpr\linewidth-\sectionlabelwidth\relax}{\raggedright #1\par\vspace{2pt}\hrule}}
+\newcommand{\resultbox}[1]{\begingroup\setlength{\fboxsep}{5pt}\boxed{#1}\endgroup}
+\ctexset{
+  chapter={name={,},number=\arabic{chapter},format=\raggedright\Huge\bfseries,
+    numberformat=\chapterlabel,aftername={},
+    beforeskip=0pt,afterskip=10mm,pagestyle=plain},
+  section={number=\arabic{chapter}.\arabic{section},format=\raggedright\Large\bfseries,
+    numberformat=\sectionlabel,aftername={},titleformat=\ruledtitle,
+    beforeskip=6mm,afterskip=1pt},
+  subsection={afterskip=1pt}
+}
+\newlength{\ponderingskip}
+\setlength{\ponderingskip}{11mm}
+\newcounter{pondering}
+\newcommand{\ponderingautorefname}{问题}
+\newcommand{\ponderingnumber}{[\thepondering]}
+\newcommand{\pondering}[1]{%
+  \par
+  \if@nobreak
+    \addvspace{.5\ponderingskip}%
+  \else
+    \addvspace{\ponderingskip}%
+  \fi
+  \refstepcounter{pondering}%
+  \addcontentsline{toc}{subsection}{\ponderingnumber\quad #1}%
+  \noindent{\large\color{accent}\ponderingnumber}\hspace{.5em}{\large\bfseries #1}\par\nobreak\@afterindenttrue\@afterheading
+}
+\setcounter{tocdepth}{3}
+% Reject U+3002 in typeset material, including moving arguments.
+\catcode"3002=\active
+\protected\def。{\PackageError{catstyle}{Use ASCII period (.) instead of U+3002}{Replace the Chinese full stop in the source with a period.}}
+\endinput

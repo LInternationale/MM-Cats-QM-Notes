@@ -1,0 +1,13 @@
+*
+!/.gitignore
+!/LICENCE
+!/Publication/
+!/Publication/catstyle.sty
+!/Publication/cover.tex
+!/Publication/main.tex
+!/Publication/Chapters/
+!/Publication/Chapters/**
+!/Publication/Figures/
+!/Publication/Figures/**
+.DS_Store
+.texpadtmp/

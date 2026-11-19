@@ -1,0 +1,242 @@
+\chapter{平移算子和生成元}
+
+\section{空间平移}
+
+\pondering{量子力学里，我们平移了什么？为什么要平移？}\label{pondering:meaning}
+
+我们知道，量子态可以理解为系统物理状态的表征，引入之的目的是为了理解测量问题.
+
+现在考虑一个一维空间中的粒子，其抽象态为 \(|\psi\rangle\). 现在，我们关心它在哪儿，即「位置」物理量的测量值. 那么，把 \(|\psi\rangle\) 往 \(X\) 的本征态 \(|x\rangle\) 上投影，得到位置表象下的波函数
+\[
+\psi(x)=\langle x|\psi\rangle
+\]
+
+如果我们用一个覆盖任意区间 \([u,v]\) 的固定探测器去「捕捉」这个粒子，那测得它的概率即为粒子落在其中的概率\side{固定的探测区间}{\input{Figures/detector-translation}\par 虚线为平移前的概率密度，实线为平移后的概率密度. }
+\[
+P_0=\int_u^v |\psi(x)|^2\,dx
+\]
+
+设整个粒子系统向右平移 \(a\)，探测器不动，记新波函数为 \(\psi_a(x)\)，现在落在 \([u,v]\) 的波包，原先落在 \([u-a,v-a]\)，有
+\[
+P_a=\int_u^v |\psi_a(x)|^2\,dx=\int_{u-a}^{v-a}|\psi(x)|^2\,dx
+\]
+变量代换：
+\[
+P_a=\int_u^v |\psi(x-a)|^2\,dx
+\]
+暂时忽略相对相位，有
+\[
+\psi_a(x)=\psi(x-a).
+\]
+这告诉我们，在空间中平移一个系统，等效于在数学上平移它的位置表象波函数.
+
+为什么我们关心平移？因为我们关心，同样的系统，在不同的空间位置，是否有相同的演化.
+
+\pondering{为什么要引入平移算子？}\label{pondering:operator}
+
+显然，由 \(\int_u^v|\psi_a(x)|^2\,dx\) 和 \(\int_u^v|\psi(x-a)|^2\,dx\) 推出 \(\psi_a(x)=\psi(x-a)\)，是不严谨的，因为，一般地，\(\psi_a(x)=e^{i\theta(x,a)}\psi(x-a)\) 均符合条件. 所以接下来，我们要更严格的定义「平移」动作.
+
+让我们先达成共识：\(x\) 是在尺子上看到的数，\(|x\rangle\) 是这个读数对应的理想定位态. \(X\) 表示「测量位置」的可观测量. \(X|x\rangle=x|x\rangle\) 即表达：若粒子精确定位在 \(x\) 处，则一定测得位置 \(x\).
+
+现在设想我们在实验室制备了精确位于 \(x\) 位置的粒子（事实上这是不可能的），有 \(|\psi\rangle=|x\rangle\). 现在我们用某种「神秘方法」把它右移 \(a\) 到 \(x+a\) 位置，即 \(|\psi_a\rangle=|x+a\rangle\). 对这种「神秘方法」，我们定义线性平移算子 \(T(a)\) 满足
+\[
+T(a)|x\rangle=|x+a\rangle
+\]
+\side{相位约定}{注意，这事实上是一个自然且方便的定义，\(\widetilde{T}(a)=e^{ika}T(a)\) 也完全是物理的. }
+
+同时我们知道波函数是表象对应物理量本征态的叠加系数：
+\[
+|\psi\rangle=\int\psi(x)|x\rangle\,dx
+\]
+将 \(T(a)\) 作用在两侧：
+\[
+T(a)|\psi\rangle=T(a)\int\psi(x)|x\rangle\,dx
+=\int\psi(x)T(a)|x\rangle\,dx
+\]
+\[
+\int\psi(x)T(a)|x\rangle\,dx
+=\int\psi(x)|x+a\rangle\,dx
+=\int\psi(x-a)|x\rangle\,dx
+\]
+又由 \(\psi_a(x)\) 的物理意义，\side{态与表象}{值得注意的是，\(\langle x|T(a)|\psi\rangle=[T(a)\psi](x)=\psi(x-a)\) 中，第一个 \(T(a)\) 指的是抽象量子算符，作用在量子态上；而第二个 \(T(a)\) 是抽象量子算符在坐标表象下的表示，作用在坐标表象波函数上. }
+\[
+\int\psi(x)T(a)|x\rangle\,dx=\int\psi_a(x)|x\rangle\,dx
+\]
+有
+\[
+\int\psi_a(x)|x\rangle\,dx=\int\psi(x-a)|x\rangle\,dx
+\]
+即
+\[
+\resultbox{\psi_a(x)=\psi(x-a)}
+\]
+现在，刚刚的结论严谨了.
+
+\pondering{平移算子必须有哪些性质？}\label{pondering:properties}
+
+先考察对一个态 \(|\psi\rangle\) 做两次平移操作：
+\[
+\begin{aligned}
+T(a)T(b)\int\psi(x)|x\rangle\,dx
+&=\int\psi(x)T(a)T(b)|x\rangle\,dx\\
+&=\int\psi(x)T(a)|x+b\rangle\,dx\\
+&=\int\psi(x)|x+a+b\rangle\,dx\\
+&=\int\psi(x-a-b)|x\rangle\,dx
+\end{aligned}
+\]
+即有
+\[
+\langle x|T(a)T(b)|\psi\rangle=\psi(x-a-b)
+\]
+可推出
+\[
+\resultbox{T(a)T(b)=T(a+b)=T(b)T(a)}
+\]\side{复合律}{两次平移的总位移为 \(a+b\). 交换两次操作的顺序，总位移相同. }
+
+由平移的物理意义知，平移 \(0\) 长度即不做变换，有
+\[
+T(0)=I
+\]
+那么有
+\[
+T(a)T(-a)=T(a-a)=T(0)=I
+\]
+\[
+T(a)=T^{-1}(-a)
+\]
+
+接下来考虑这样一个情况，我们有一个待测态 \(\psi\) 和一个参考态 \(\phi\)，我们关心 \(\psi\) 在 \(\phi\) 上的投影 \(\langle\phi|\psi\rangle\). 现在我们同步搬动 \(\psi\) 和 \(\phi\)，它们的内积会改变吗？
+\[
+\begin{aligned}
+\langle\phi|T^\dagger(a)T(a)|\psi\rangle
+&=\langle\phi|T^\dagger(a)\int|x\rangle\langle x|\,dx\,T(a)|\psi\rangle\\ &=\int\phi^*(x-a)\psi(x-a)\,dx\\
+&=\int\phi^*(x)\psi(x)\,dx=\langle\phi|\psi\rangle
+\end{aligned}
+\]
+
+结论：内积不变. 有
+\[
+T^\dagger(a)T(a)=I
+\]
+由于 \(T(a)\) 已有逆算符，立即得到 \(T^\dagger(a)=T(a)^{-1}=T(-a)\)，所以 \(T(a)T^\dagger(a)=I\)，即
+\[
+\resultbox{T^\dagger(a)T(a)=I=T(a)T^\dagger(a)}
+\]
+故 \(T(a)\) 是幺正算符.
+
+最后，我们讨论如果平移很小一段距离，平移算子的形式是怎样的？由物理意义显然：
+\[
+\lim_{a\to0}T(a)=I
+\]
+这对后续我们讨论「平移很小一段距离」很有用.
+
+事实上，算子的极限的确切定义是一个很有价值的数学问题. 一种常见的定义（强连续）是：
+\[
+\forall|\psi\rangle,\quad\lim_{a\to0}\left\|(T(a)-I)|\psi\rangle\right\|=0
+\]
+\side{强连续性}{严格来说，由于 \(|x\rangle\) 是广义本征态，上式无法直接证明. 但若对一维无自旋粒子，其 Hilbert 空间在位置表象下可实现为 \(L^2(\mathbb{R})\)，则在此空间上，该连续性在数学上是可以被严格证明的. }
+
+但注意，即使接受了 \(\lim_{a\to0}T(a)=I\)，也不自动保证
+\[
+\lim_{a\to0}\frac{T(a)-I}{a}|\psi\rangle
+\]
+对任意 \(|\psi\rangle\) 均存在.
+
+\pondering{什么是生成元？为什么要研究无穷小变换？}
+
+生成元和有限变换的关系，可以类比为微分和积分的关系. 现在我们有了平移操作 \(T(a)\)，自然考虑 \(T(a)\) 作用在量子态上时，在起步阶段（\(a=0\)），态平移的有多快. 直观起见，我们考察坐标表象波函数对 \(a\) 的变化率，由导数定义
+\[
+\left.\frac{\partial\psi_a(x)}{\partial a}\right|_{a=0}
+=\lim_{\varepsilon\to0}\frac{\psi(x-\varepsilon)-\psi(x)}{\varepsilon}
+=-\frac{d\psi(x)}{dx}
+\]
+我们发现这就是 \(\psi(x)\) 对 \(x\) 的导数！这是自然的，因为若我们以 \(\psi(x)\) 波包为参考系，就会看到坐标轴在移动，也即对 \(x\) 求导. 负号的差异源于主动视角和被动视角的转换.
+
+若我们换用一个表象无关的视角呢？已知 \(\psi_a(x)=\langle x|T(a)|\psi\rangle\)，\(\psi(x)=\langle x|\psi\rangle\)，\(\psi(x-\varepsilon)=\langle x-\varepsilon|\psi\rangle=\langle x|T^\dagger(-\varepsilon)|\psi\rangle=\langle x|T(\varepsilon)|\psi\rangle\)，代入坐标表象下的导数关系：
+\[
+\left.\frac{\partial\langle x|T(a)|\psi\rangle}{\partial a}\right|_{a=0}
+=\lim_{\varepsilon\to0}\frac{\langle x|T(\varepsilon)|\psi\rangle-\langle x|\psi\rangle}{\varepsilon}
+\]
+\(\langle x|\) 显然和 \(a\) 无关，且由基底的完备性：
+\side{导数存在性}{正如之前提醒过的，我们取使这个极限存在的态 \(|\psi\rangle\).}
+\[
+\left.\frac{\partial T(a)|\psi\rangle}{\partial a}\right|_{a=0}
+=\lim_{\varepsilon\to0}\frac{T(\varepsilon)|\psi\rangle-|\psi\rangle}{\varepsilon}
+\]
+现在我们在两侧乘上 \(i\) \side{生成元的自伴性}{为什么这样做？为了保证生成元自伴. 回忆 \(T^\dagger(a)=T(-a)\). 形式上，在 \(a=0\) 处对两边求导，右边因 \(-a\) 多出一个负号，于是 \(T'^\dagger(0)=-T'(0)\). 再看 \(iT'(0)\)：取伴随时，\(i\) 也变号，两个负号恰好抵消.}
+\[
+i\left.\frac{\partial T(a)|\psi\rangle}{\partial a}\right|_{a=0}
+=i\lim_{\varepsilon\to0}\frac{T(\varepsilon)|\psi\rangle-|\psi\rangle}{\varepsilon}
+\]
+现在令 \(K=i\left.\frac{\partial T(a)}{\partial a}\right|_{a=0}\)，形式上地，\(K\) 可被理解为 \(T(a)\) 对 \(a\) 的导数在 \(a=0\) 处的取值.\side{生成元的导数定义}{事实上，通过严格的数学方法，可以证明：对使上面差商极限存在的态 \(|\psi\rangle\)，该极限就是 \(-iK|\psi\rangle\).} 则有
+\[
+K|\psi\rangle=i\lim_{\varepsilon\to0}\frac{T(\varepsilon)|\psi\rangle-|\psi\rangle}{\varepsilon}
+\]
+使用 Peano 余项将极限误差吸入小量并移项，有
+\[
+T(\varepsilon)|\psi\rangle=|\psi\rangle-i\varepsilon K|\psi\rangle+o(\varepsilon)
+\]\side{Taylor 展开}{这个式子在形式上接近 Taylor 展开，但事实上我们不保证 \(T(a)|\psi\rangle\) 有足够高阶的导数.}
+
+我们将 \(K\) 称为 \(T(a)\) 的生成元. 现在我们可以接受：生成元是算子的导数. 现在一个很棒的问题是，为什么我们只研究 \(a=0\) 处的导数而非所有 \(a\) 处的导数？回忆叠加性
+\[
+T(a)T(b)=T(a+b)
+\]
+若要研究 \(T(a+da)\)，仅需研究 \(T(da)T(a)\)，即在 \(|x+a\rangle\) 上研究 \(T(0+da)\) 的作用. 这也暗示了我们可以用无穷多个无穷小的平移叠加成一个有限平移.
+
+\pondering{如何用生成元描述有限平移？为什么平移生成元就是动量？}
+
+有了关于导数的信息，如何构造出原「函数」？答案显然是「积分」，或更一般地，求解微分方程.
+
+由平移的叠加性和导数的定义，
+\[
+\begin{aligned}
+\frac{d}{da}T(a)|\psi\rangle
+&=\lim_{\varepsilon\to0}\frac{T(a+\varepsilon)|\psi\rangle-T(a)|\psi\rangle}{\varepsilon}\\
+&=\lim_{\varepsilon\to0}\frac{T(\varepsilon)-I}{\varepsilon}T(a)|\psi\rangle\\
+&=-iKT(a)|\psi\rangle
+\end{aligned}
+\]
+于是事实上我们得到微分方程
+\[
+\frac{d}{da}T(a)|\psi\rangle=-iKT(a)|\psi\rangle
+\]
+结合 \(T(0)=I\) 的初始条件，我们立即得到
+\[
+T(a)=e^{-iaK}
+\]
+这就是用生成元描述连续变换的方法. 
+
+值得注意的是，不仅仅对平移算子，对任意满足 \(T(a)T(b)=T(a+b)\) 的幺正连续算子，必有指数表征 \(T(a)=e^{-iaK}\)，\(K\) 为 \(T\) 的自伴生成元. 其原因我们已经简单证明过.\side{Stone 定理}{严格的数学讨论涉及 Stone 定理.}
+
+接下来我们来讨论 \(K\) 算子对应的到底是哪个物理量. 注意到一个有趣的数学事实，考察 \(K\) 在坐表表象下的表示：
+\[
+\langle x|K|\psi\rangle=-i\frac{d}{dx}\psi(x)
+\]
+\[
+K=-i\frac{d}{dx}
+\]
+求它的本征波函数
+\[
+-i\frac{d}{dx}\psi_k(x)=k\psi_k(x)
+\]
+得
+\[
+\psi_k(x)=Ce^{ikx}
+\]
+显然，本征波函数的形式是单色平面波，而 \(k\) 是波数.
+
+现在我们知道了，平移生成元 \(K\) 是波数 \(k\) 的算子. 由 de Broglie 关系，我们可以定义「波函数的动量」
+\[
+p=\hbar k
+\]
+和对应的动量算子
+\[
+P=\hbar K
+\]
+然后我们就能得到一个早已熟悉的关系：
+\[
+P=-i\hbar\frac{\partial}{\partial x}
+\]
+
+不过，这里有一个很微妙的区别：我们定义了和位置表象下单色平面波函数对应的动量 \(p\)，但没有保证它就是波函数描述的粒子的动量（若它描述的确实是粒子的话）. 也就是讲，\(p=\hbar k\) 和 \(p=mv\) 定义的动量是否一致，仍有待商榷. \side{自由粒子}{对自由粒子的波函数，二者在数值上相等.}
+事实上，它们在物理意义上是不同的，二者在什么条件下数值上相等，要考虑具体的动力学系统后讨论，这就是后话了.
