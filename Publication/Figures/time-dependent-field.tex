@@ -1,0 +1,30 @@
+\begin{tikzpicture}[
+  x=1cm, y=1cm, >=stealth, font=\small,
+  every node/.style={inner sep=1.5pt},
+  interval/.style={->,accent!65!black,line width=.8pt}
+]
+  \coordinate (start1) at (1.90,1.30);
+  \coordinate (start2) at (5.86,.74);
+
+  \draw[->,muted] (0,0) -- (9.40,0) node[right] {\(t\)};
+  \draw[->,muted] (0,0) -- (0,2.30) node[above] {\(E(t)\)};
+  \foreach \i in {1,2} {
+    \draw[muted!55,densely dotted] (start\i |- 0,0) -- (start\i);
+    \node[below=2pt] at (start\i |- 0,0) {\(t_{\i}\)};
+  }
+
+  \draw[accent,line width=.9pt]
+    (.06,1.43) .. controls (.46,.62) and (1.12,.44) .. (start1)
+    .. controls (2.33,1.80) and (2.62,2.06) .. (3.11,2.06)
+    .. controls (4.03,2.06) and (4.29,.55) .. (5.31,.55)
+    .. controls (5.52,.55) and (5.68,.60) .. (start2)
+    .. controls (6.52,1.28) and (6.93,1.86) .. (7.64,1.86)
+    .. controls (8.23,1.86) and (8.63,1.43) .. (9.12,1.12);
+
+  \foreach \i in {1,2} {
+    \draw[interval] (start\i) -- ++(1.45,0)
+      node[pos=.78,above=1pt] {\(\tau\)}
+      node[pos=0,anchor=north west,yshift=-2pt] {\(U(t_{\i}+\tau,\,t_{\i})\)};
+    \fill[accent!65!black] (start\i) circle[radius=1.5pt];
+  }
+\end{tikzpicture}%

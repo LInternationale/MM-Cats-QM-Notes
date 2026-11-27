@@ -1,0 +1,31 @@
+\begin{tikzpicture}[
+  x=4.05cm, y=1.43cm, >=stealth, font=\footnotesize,
+  every node/.style={inner sep=1.5pt},
+  return probability/.style={accent,line width=.95pt},
+  other probability/.style={muted,line width=.8pt,dash pattern=on 3.2pt off 2.2pt}
+]
+  \draw[muted!45,densely dotted] (0,1) -- (2.02,1);
+  \draw[->,muted] (0,0) -- (2.13,0);
+  \draw[->,muted] (0,0) -- (0,1.23) node[above] {\(P(\tau)\)};
+  \draw[muted] (0,1) -- ++(-.018,0) node[left] {\(1\)};
+
+  % The horizontal plot coordinate is the waiting time in units of T.
+  \draw[other probability,domain=0:2,samples=121]
+    plot (\x,{(1-cos(360*\x))/2});
+  \draw[return probability,domain=0:2,samples=121]
+    plot (\x,{(1+cos(360*\x))/2});
+
+  \draw[return probability] (.23,1.39) -- (.39,1.39)
+    node[right=2pt] {初态};
+  \draw[other probability] (1.13,1.39) -- (1.29,1.39)
+    node[right=2pt] {正交态};
+
+  \foreach \position/\duration/\phase in
+    {0/0/0,.5/{T/2}/\pi,1/T/{2\pi},1.5/{3T/2}/{3\pi},2/{2T}/{4\pi}} {
+    \draw[muted] (\position,0) -- ++(0,-.055);
+    \node[anchor=north] at (\position,-.08) {\(\duration\)};
+    \node[anchor=north,text=muted] at (\position,-.40) {\(\phase\)};
+  }
+  \node[anchor=north west] at (2.13,-.08) {时间 \(\tau\)};
+  \node[anchor=north west,text=muted] at (2.13,-.40) {相位差 \(\omega_{21}\tau\)};
+\end{tikzpicture}%

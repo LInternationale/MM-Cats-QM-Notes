@@ -1,0 +1,34 @@
+\begin{tikzpicture}[
+  x=1cm, y=1cm, >=stealth, font=\footnotesize,
+  every node/.style={inner sep=1.5pt},
+  density/.style={accent,line width=.85pt},
+  declare function={packet(\pos,\peak)=exp(-((\pos-\peak)^2)/(2*.54^2));}
+]
+  \node[font=\small] at (1.93,2.55) {位置分布};
+  \draw[->,muted] (0,0) -- (4.17,0) node[right] {\(x\)};
+  \draw[->,muted] (0,0) -- (0,1.88)
+    node[above right] {\(\lvert\psi(x,t_1)\rvert^2\)};
+
+  \foreach \i/\position in {1/.96,2/1.56,3/2.16} {
+    \coordinate (sample\i) at (\position,{1.47*packet(\position,1.56)});
+    \draw[muted!65,densely dashed] (\position,0) -- (sample\i);
+    \node[below=2pt] at (\position,0) {\(x_{\i}\)};
+  }
+  \draw[density,domain=0:3.94,samples=85] plot (\x,{1.47*packet(\x,1.56)});
+  \foreach \i in {1,2,3} {
+    \fill[accent] (sample\i) circle[radius=1.4pt];
+  }
+
+  \begin{scope}[shift={(5.75,0)}]
+    \node[font=\small] at (1.80,2.55) {时间演化};
+    \draw[->,muted] (-.63,2.08) -- (-.63,-.08) node[below] {\(t\)};
+    \foreach \i/\level/\peak in {1/1.56/1.56,2/.78/2.02,3/0/2.48} {
+      \begin{scope}[shift={(0,\level)}]
+        \draw[muted!50] (0,0) -- (3.94,0);
+        \node[anchor=east] at (-.07,0) {\(t_{\i}\)};
+        \draw[density,domain=0:3.94,samples=85] plot (\x,{.55*packet(\x,\peak)});
+      \end{scope}
+    }
+    \draw[->,muted] (3.94,0) -- (4.17,0) node[right] {\(x\)};
+  \end{scope}
+\end{tikzpicture}%

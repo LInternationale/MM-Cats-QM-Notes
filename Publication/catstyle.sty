@@ -59,6 +59,12 @@
   \parbox[t]{\dimexpr\linewidth-\sectionlabelwidth\relax}{\raggedright #1\par\vspace{2pt}\hrule}}
 \newcommand{\resultbox}[1]{\begingroup\setlength{\fboxsep}{5pt}\boxed{#1}\endgroup}
 \ctexset{
+  part={name={第,篇},number=\chinese{part},format=\raggedright,
+    nameformat=\color{accent}\fontsize{18}{22}\selectfont,
+    aftername=\par\nobreak\vspace{4mm},
+    titleformat=\bfseries\fontsize{36}{42}\selectfont,
+    aftertitle=\par\nobreak\vspace{6mm}{\color{accent}\hrule height .45pt},
+    beforeskip=.22\textheight,afterskip=0pt,pagestyle=empty},
   chapter={name={,},number=\arabic{chapter},format=\raggedright\Huge\bfseries,
     numberformat=\chapterlabel,aftername={},
     beforeskip=0pt,afterskip=10mm,pagestyle=plain},
